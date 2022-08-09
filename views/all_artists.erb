@@ -1,0 +1,10 @@
+<html>
+  <head></head>
+  <body>
+      <h1> Artist </h1>
+      <% @artists.each do |artist| %>
+          <a href="/artists/<%=artist.id%>"><%= artist.name %></a>
+          <p></p>
+      <% end %>
+  </body>
+</html>

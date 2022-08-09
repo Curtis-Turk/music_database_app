@@ -1,0 +1,17 @@
+<html>
+  <head></head>
+  <body>
+    <!-- the ERB tag below will be replaced by the value of @name -->
+    <h1><%= @artist.name %>!</h1>
+    <p>
+      Genre: <%= @artist.genre %>
+      <br><br>
+      Albums:
+    </p>
+    <p> <% @artist_albums.each do |album|%> 
+        <%= album.title %>
+        <br>
+        <%end%>
+    </p>
+  </body>
+</html>
