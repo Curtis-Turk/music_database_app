@@ -125,6 +125,14 @@ RSpec.describe Application do
       expect(response.body).to include('<h1>Pastel Blues has been added!</h1>')
     end
 
+    it 'should validate parameters' do
+      response = post(
+        '/albums',
+        invalid_title: 'Ok Computer',
+        invalid_id: 123 
+      )
+      expect(response.status).to eq(400)
+    end
     xit 'returns 404 if parameters are invalid' do
       response = post(
         '/albums',
