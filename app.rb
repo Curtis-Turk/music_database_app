@@ -29,9 +29,13 @@ class Application < Sinatra::Base
     return erb(:all_albums)
   end
 
-  get '/albums/:id' do
+  get '/albums/new' do
+    return erb(:new_album)
+  end
+  
+  get /\/albums\/([0-9])/ do
     repo = AlbumRepository.new
-    @album = repo.find(params[:id])
+    @album = repo.find(params['captures'].first)
     
     artist_repo = ArtistRepository.new
 
@@ -50,7 +54,7 @@ class Application < Sinatra::Base
 
     repo.create(album)
     album.title
-    return
+    return erb(:new_album)
   end
 
   get '/artists/:id' do
