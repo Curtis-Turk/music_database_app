@@ -44,6 +44,10 @@ class Application < Sinatra::Base
     return erb(:album) 
   end
  
+  get '/artists/new' do
+    return erb(:new_artist)
+  end
+
   post '/albums' do
     if invalid_parameters?
       status 400
@@ -57,8 +61,17 @@ class Application < Sinatra::Base
     album.artist_id = params[:artist_id]
 
     repo.create(album)
-    album.title
     return ""
+  end
+
+  post '/artists' do
+    repo = ArtistRepository.new
+    artist = Artist.new
+
+    artist.name = params[:name]
+    artist.genre = params[:genre]
+
+    repo.create(artist)
   end
 
   get /\/artists\/([0-9]+)/ do

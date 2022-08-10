@@ -49,6 +49,61 @@ RSpec.describe Application do
     end
   end
 
+  context "GET /albums/new" do
+    it "returns the form page" do
+      response = get('/albums/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Create an Album</h1>')
+      expect(response.body).to include('<form action="/albums" method="POST">')
+      expect(response.body).to include("<input type='text' name='title'>")
+      expect(response.body).to include("<input type='text' name='release_year'>")
+      expect(response.body).to include("<input type='text' name='artist_id'>")
+    end
+  end
+  
+  context "POST /albums" do
+    # xit 'returns a success page for an album' do
+    #   response = post(
+    #     '/albums',
+    #     title: 'Indie Cindy',
+    #     release_year: '2014',
+    #     artist_id: '1'
+    #   )
+    #   expect(response.status).to eq(200)
+    #   expect(response.body).to include('<h1>Indie Cindy has been added!</h1>')
+    # end
+
+    # xit 'returns a success page for a different album' do
+    #   response = post(
+    #     '/albums',
+    #     title: 'Pastel Blues',
+    #     release_year: '1965',
+    #     artist_id: '4'
+    #   )
+    #   expect(response.status).to eq(200)
+    #   expect(response.body).to include('<h1>Pastel Blues has been added!</h1>')
+    # end
+
+    it 'should validate parameters' do
+      response = post(
+        '/albums',
+        invalid_title: 'Ok Computer',
+        invalid_id: 123 
+      )
+      expect(response.status).to eq(400)
+    end
+    # xit 'returns 404 if parameters are invalid' do
+    #   response = post(
+    #     '/albums',
+    #     title: 1,
+    #     release_year: '',
+    #     artist_id: '5'
+    #   )
+    #   expect(response.status).to eq(404)
+    # end
+  end
+
   context "GET to /artists/1" do
     it "Returns an artist in the index body" do
       response = get("/artists/1")
@@ -89,59 +144,17 @@ RSpec.describe Application do
     end
   end
 
-  context "GET /albums/new" do
-    it "returns the form page" do
-      response = get('/albums/new')
+  context "GET /artists/new" do
+    it "returns the form page for a new artist" do
+      response = get('/artists/new')
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>Create an Album</h1>')
-      expect(response.body).to include('<form action="/albums" method="POST">')
-      expect(response.body).to include("<input type='text' name='title'>")
-      expect(response.body).to include("<input type='text' name='release_year'>")
-      expect(response.body).to include("<input type='text' name='artist_id'>")
+      expect(response.body).to include('<h1>Create an Artist</h1>')
+      expect(response.body).to include('<form action="/artists" method="POST">')
+      expect(response.body).to include("<input type='text' name='name'>")
+      expect(response.body).to include("<input type='text' name='genre'>")
     end
   end
   
-  context "POST /albums" do
-    it 'returns a success page for an album' do
-      response = post(
-        '/albums',
-        title: 'Indie Cindy',
-        release_year: '2014',
-        artist_id: '1'
-      )
-      expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>Indie Cindy has been added!</h1>')
-    end
-
-    xit 'returns a success page for a different album' do
-      response = post(
-        '/albums',
-        title: 'Pastel Blues',
-        release_year: '1965',
-        artist_id: '4'
-      )
-      expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>Pastel Blues has been added!</h1>')
-    end
-
-    it 'should validate parameters' do
-      response = post(
-        '/albums',
-        invalid_title: 'Ok Computer',
-        invalid_id: 123 
-      )
-      expect(response.status).to eq(400)
-    end
-    xit 'returns 404 if parameters are invalid' do
-      response = post(
-        '/albums',
-        title: 1,
-        release_year: '',
-        artist_id: '5'
-      )
-      expect(response.status).to eq(404)
-    end
-  end
 
 end
